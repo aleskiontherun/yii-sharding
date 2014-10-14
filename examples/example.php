@@ -17,3 +17,12 @@ $model->save();
 $models = UserPhotos::model()->user($user_id)->findAll();
 // Same as:
 $models = UserPhotos::model()->shardKey($user_id)->findAll();
+
+
+// Calculate all photos width
+$total = 0;
+$query = UserPhotos::model()->queryShards("SELECT width FROM {{table}}");
+foreach ($query as $row)
+{
+	$total += $row['width'];
+}
